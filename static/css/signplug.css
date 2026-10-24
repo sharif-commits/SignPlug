@@ -222,3 +222,14 @@
   background: #000;
   object-fit: contain;
 }
+
+/* Demos section: screenshots link to the demos */
+.demo-link,
+.demo-link:hover {
+  color: inherit;
+  display: block;
+}
+
+.demo-link img {
+  cursor: pointer;
+}

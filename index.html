@@ -108,15 +108,21 @@
                   </a>
                 </span>
                 <span class="link-block">
-                  <a class="button is-normal is-rounded is-dark" href="https://github.com/sharif-commits/ISL-AVATAR-PROJECT" target="_blank" rel="noopener" title="Code on GitHub">
+                  <a class="button is-normal is-rounded is-dark" href="https://github.com/sharif-commits/SignPlug-code" target="_blank" rel="noopener" title="Code on GitHub">
                     <span class="icon"><svg width="16" height="16" viewBox="0 0 496 512" aria-hidden="true"><path fill="currentColor" d="M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></svg></span>
                     <span>Code</span>
                   </a>
                 </span>
                 <span class="link-block">
-                  <a class="button is-normal is-rounded is-dark is-inactive" aria-disabled="true" title="Coming soon">
+                  <a class="button is-normal is-rounded is-dark" href="http://10.1.72.56:8080/" target="_blank" rel="noopener" title="Live synthesis demo (reachable on the IIIT Hyderabad network)">
                     <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></span>
-                    <span>Live Demo</span><span class="soon-tag">soon</span>
+                    <span>Live Synthesis Demo</span><span class="soon-tag">IIIT network</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a class="button is-normal is-rounded is-dark" href="https://sharif-commits.github.io/SignPlug-code/" target="_blank" rel="noopener" title="SignPlug widget embedded in a web page">
+                    <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 4h18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 5v9h16V9H4zm1-3.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm3 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg></span>
+                    <span>Web-Plugin Demo</span>
                   </a>
                 </span>
                 <span class="link-block">
@@ -230,8 +236,50 @@
     </section>
 
 
+    <!-- ===== DEMOS ===== -->
+    <section class="section hero" id="demos">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column uniform-content-width">
+            <h2 class="title is-3">Demos</h2>
+
+            <div class="video-block">
+              <h3 class="title is-5">Live Synthesis Demo</h3>
+              <p class="content has-text-justified">
+                Type any English sentence, or pick one of 100 example sentences: it is translated into ISL glosses,
+                their keyposes are retrieved from the Widget Dictionary and interpolated live, and the avatar signs it
+                while the gloss being signed is highlighted. Words without a sign are fingerspelled.
+                <em>The live demo runs on a server inside the IIIT Hyderabad network.</em>
+              </p>
+              <a href="http://10.1.72.56:8080/" target="_blank" rel="noopener" class="demo-link">
+                <figure class="figure-card">
+                  <img src="static/images/live_synthesis_demo.jpg" alt="ISL Sign Chat: a sentence library and text box on the left, and the avatar signing 'Please help me' on the right, with the current gloss HELP shown below it.">
+                  <figcaption>ISL Sign Chat: the avatar signs "Please help me" (PLEASE I HELP).</figcaption>
+                </figure>
+              </a>
+            </div>
+
+            <div class="video-block">
+              <h3 class="title is-5">Web-Plugin Demo</h3>
+              <p class="content has-text-justified">
+                The SignPlug widget embedded in an existing web page: select a sentence on the page and the floating
+                avatar signs it, with playback and scrubbing controls, entirely in the browser.
+              </p>
+              <a href="https://sharif-commits.github.io/SignPlug-code/" target="_blank" rel="noopener" class="demo-link">
+                <figure class="figure-card">
+                  <img src="static/images/website_demo.png" alt="The SignPlug widget embedded in a web page, signing 'He wants to go to the office'.">
+                  <figcaption>Open the web-plugin demo.</figcaption>
+                </figure>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
     <!-- ===== PIPELINE ===== -->
-    <section class="section hero">
+    <section class="section hero is-light">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column uniform-content-width">
@@ -259,7 +307,7 @@
 
 
     <!-- ===== WIDGET DICTIONARY ===== -->
-    <section class="section hero is-light">
+    <section class="section hero">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column uniform-content-width">
@@ -288,7 +336,7 @@
 
 
     <!-- ===== GIZMO CORRECTION ===== -->
-    <section class="section hero">
+    <section class="section hero is-light">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column uniform-content-width">
@@ -314,7 +362,7 @@
 
 
     <!-- ===== RESULTS ===== -->
-    <section class="section hero is-light">
+    <section class="section hero">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column uniform-content-width">
@@ -383,7 +431,7 @@
 
 
     <!-- ===== CONCLUSION ===== -->
-    <section class="section hero">
+    <section class="section hero is-light">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column is-four-fifths">
@@ -406,7 +454,7 @@
     <!-- ===== CITATION =====
          Hidden until the official BibTeX is available (proceedings / de-anonymized OpenReview record).
          To restore: uncomment this section and paste the official entry into <code id="bibtex-code">.
-    <section class="section hero is-light" id="BibTeX">
+    <section class="section hero" id="BibTeX">
       <div class="container is-max-desktop">
         <div class="bibtex-header">
           <h2 class="title is-3" style="margin-bottom: 0 !important;">Citation</h2>
