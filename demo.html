@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SignPlug Demos | ICVGIP 2026</title>
+  <meta name="description" content="SignPlug live synthesis demos: the web-plugin widget and the ISL Sign Chat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-soft: #eff4ff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --surface: #f8fafc;
+      --bg: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      display: flex; flex-direction: column;
+    }
+
+    header {
+      display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+      padding: 12px 22px; border-bottom: 1px solid var(--line);
+    }
+    .back { color: var(--muted); text-decoration: none; font-size: 0.9rem; white-space: nowrap; }
+    .back:hover { color: var(--primary); }
+    header h1 { margin: 0; font-size: 1.1rem; font-weight: 800; }
+
+    [role="tablist"] { display: flex; gap: 6px; margin-left: auto; }
+    [role="tab"] {
+      font: inherit; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--line); background: var(--bg); color: var(--text);
+      border-radius: 999px; padding: 8px 16px;
+    }
+    [role="tab"]:hover { border-color: var(--primary); color: var(--primary); }
+    [role="tab"][aria-selected="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+    [role="tab"]:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+
+    main { flex: 1; min-height: 0; display: flex; }
+    [role="tabpanel"] { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    [role="tabpanel"][hidden] { display: none; }
+
+    .bar {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 8px 22px; background: var(--surface); border-bottom: 1px solid var(--line);
+      font-size: 0.85rem; color: var(--muted);
+    }
+    .bar a { color: var(--primary); font-weight: 600; text-decoration: none; margin-left: auto; white-space: nowrap; }
+    .bar a:hover { text-decoration: underline; }
+    iframe { flex: 1; width: 100%; min-height: 0; border: 0; display: block; }
+
+    .chat {
+      flex: 1; overflow-y: auto; padding: 28px 22px 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 18px;
+    }
+    .chat p { max-width: 760px; margin: 0; line-height: 1.6; text-align: center; color: var(--text); }
+    .chat .note { color: var(--muted); font-size: 0.88rem; }
+    .open-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--primary); color: #fff; text-decoration: none; font-weight: 700;
+      border-radius: 12px; padding: 12px 22px;
+    }
+    .open-btn:hover { background: #1d4ed8; }
+    .shot { display: block; max-width: 1100px; width: 100%; }
+    .shot img {
+      width: 100%; display: block; border-radius: 14px; border: 1px solid var(--line);
+      box-shadow: 0 10px 25px -8px rgb(0 0 0 / 0.18);
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 10px 14px; }
+      [role="tablist"] { margin-left: 0; width: 100%; }
+      [role="tab"] { flex: 1; }
+      .bar { padding: 8px 14px; }
+      .bar a { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back" href="./">&larr; SignPlug</a>
+    <h1>Live Synthesis Demo</h1>
+    <div role="tablist" aria-label="Demos">
+      <button role="tab" id="tab-web-plugin" aria-controls="panel-web-plugin" aria-selected="true" data-key="web-plugin">Web-Plugin</button>
+      <button role="tab" id="tab-sign-chat" aria-controls="panel-sign-chat" aria-selected="false" tabindex="-1" data-key="sign-chat">ISL Sign Chat</button>
+    </div>
+  </header>
+
+  <main>
+    <section role="tabpanel" id="panel-web-plugin" aria-labelledby="tab-web-plugin">
+      <div class="bar">
+        <span>The SignPlug widget embedded in a web page: select a sentence on the page and the avatar signs it.</span>
+        <a href="https://sharif-commits.github.io/SignPlug-code/" target="_blank" rel="noopener">Open in a new tab &#8599;</a>
+      </div>
+      <iframe src="https://sharif-commits.github.io/SignPlug-code/" title="SignPlug web-plugin demo" loading="lazy" allow="fullscreen"></iframe>
+    </section>
+
+    <section role="tabpanel" id="panel-sign-chat" aria-labelledby="tab-sign-chat" hidden>
+      <div class="chat">
+        <p>
+          Type any English sentence, or pick one of 100 example sentences: it is translated into ISL glosses,
+          their keyposes are retrieved from the Widget Dictionary and interpolated live, and the avatar signs it
+          while the gloss being signed is highlighted. Words without a sign are fingerspelled.
+        </p>
+        <a class="open-btn" href="http://10.1.72.56:8080/" target="_blank" rel="noopener">Open ISL Sign Chat &#8599;</a>
+        <p class="note">
+          The ISL Sign Chat runs on a server inside the IIIT Hyderabad network, so it opens in its own tab and is
+          reachable only from that network.
+        </p>
+        <a class="shot" href="http://10.1.72.56:8080/" target="_blank" rel="noopener">
+          <img src="static/images/live_synthesis_demo.jpg" alt="ISL Sign Chat: a sentence library and text box on the left, and the avatar signing 'Please help me' on the right, with the current gloss HELP shown below it.">
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+
+    function select(tab, focus) {
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) tab.focus();
+      history.replaceState(null, '', '#' + tab.dataset.key);
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab, false));
+      tab.addEventListener('keydown', e => {
+        const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (step) { e.preventDefault(); select(tabs[(i + step + tabs.length) % tabs.length], true); }
+      });
+    });
+
+    const start = tabs.find(t => '#' + t.dataset.key === location.hash);
+    if (start) select(start, false);
+  </script>
+</body>
+</html>
