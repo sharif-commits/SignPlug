@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="SignPlug - ISL plugin for the web">
+  <meta name="description" content="SignPlug is a lightweight, real-time, browser-based framework for synthesizing continuous Indian Sign Language (ISL) avatar motion from sentences, built on the Widget Dictionary, a manually corrected 3D gloss pose dictionary. ICVGIP 2026.">
+  <meta name="keywords" content="Indian Sign Language, ISL, sign language generation, 3D avatar, SMPL-X, gloss dictionary, pose correction, real-time animation, accessibility, ICVGIP 2026">
+  <meta name="author" content="Masthan Sharif Shaik, Mohammed Raza Ur Rahman, Aditya Singh Rathore, Seshadri Mazumder, C.V. Jawahar, Vinay P. Namboodiri">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="CVIT, IIIT Hyderabad">
+  <meta property="og:title" content="SignPlug - ISL plugin for the web">
+  <meta property="og:description" content="Real-time, browser-based Indian Sign Language avatar synthesis from a manually corrected 3D gloss pose dictionary.">
+  <meta property="og:image" content="static/images/teaser.png">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="SignPlug - ISL plugin for the web">
+  <meta name="citation_author" content="Shaik, Masthan Sharif">
+  <meta name="citation_author" content="Rahman, Mohammed Raza Ur">
+  <meta name="citation_author" content="Rathore, Aditya Singh">
+  <meta name="citation_author" content="Mazumder, Seshadri">
+  <meta name="citation_author" content="Jawahar, C.V.">
+  <meta name="citation_author" content="Namboodiri, Vinay P.">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="Indian Conference on Computer Vision, Graphics and Image Processing (ICVGIP)">
+
+  <meta name="theme-color" content="#2563eb">
+
+  <title>SignPlug - ISL plugin for the web | ICVGIP 2026</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/signplug.css">
+
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "SignPlug - ISL plugin for the web",
+    "description": "A lightweight, real-time, browser-based framework for synthesizing continuous Indian Sign Language avatar motion from sentences.",
+    "author": [
+      { "@type": "Person", "name": "Masthan Sharif Shaik", "affiliation": { "@type": "Organization", "name": "IIIT Hyderabad" } },
+      { "@type": "Person", "name": "Mohammed Raza Ur Rahman", "affiliation": { "@type": "Organization", "name": "IIIT Hyderabad" } },
+      { "@type": "Person", "name": "Aditya Singh Rathore", "affiliation": { "@type": "Organization", "name": "IIIT Hyderabad" } },
+      { "@type": "Person", "name": "Seshadri Mazumder", "affiliation": { "@type": "Organization", "name": "IIIT Hyderabad" } },
+      { "@type": "Person", "name": "C.V. Jawahar", "affiliation": { "@type": "Organization", "name": "IIIT Hyderabad" } },
+      { "@type": "Person", "name": "Vinay P. Namboodiri", "affiliation": { "@type": "Organization", "name": "University of Bath" } }
+    ],
+    "datePublished": "2026",
+    "publisher": { "@type": "Organization", "name": "Indian Conference on Computer Vision, Graphics and Image Processing (ICVGIP)" },
+    "keywords": ["Indian Sign Language", "SMPL-X", "sign language production", "3D avatar", "accessibility"],
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"/></svg>
+  </button>
+
+  <main id="main-content">
+
+    <!-- ===== HERO: Title + Authors ===== -->
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">SignPlug - ISL plugin for the web</h1>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Masthan Sharif Shaik<sup>1</sup>,</span>
+                <span class="author-block">Mohammed Raza Ur Rahman<sup>1</sup>,</span>
+                <span class="author-block">Aditya Singh Rathore<sup>1</sup>,</span>
+                <span class="author-block">Seshadri Mazumder<sup>1</sup>,</span>
+                <span class="author-block">C.V. Jawahar<sup>1</sup>,</span>
+                <span class="author-block">Vinay P. Namboodiri<sup>2</sup></span>
+              </div>
+
+              <div class="is-size-6 publication-authors affiliation-list">
+                <span class="author-block"><sup>1</sup>CVIT, IIIT Hyderabad, India</span>
+                <span class="author-block"><sup>2</sup>University of Bath, United Kingdom</span>
+                <br>
+                <span class="venue-tag">ICVGIP 2026</span>
+              </div>
+
+              <!-- Links are inactive until the paper and code are released -->
+              <div class="publication-links">
+                <span class="link-block">
+                  <a class="button is-normal is-rounded is-dark is-inactive" aria-disabled="true" title="Coming soon">
+                    <span class="icon"><svg width="14" height="16" viewBox="0 0 384 512" aria-hidden="true"><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"/></svg></span>
+                    <span>Paper</span><span class="soon-tag">soon</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a class="button is-normal is-rounded is-dark is-inactive" aria-disabled="true" title="Coming soon">
+                    <span class="icon"><svg width="16" height="16" viewBox="0 0 496 512" aria-hidden="true"><path fill="currentColor" d="M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></svg></span>
+                    <span>Code</span><span class="soon-tag">soon</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a class="button is-normal is-rounded is-dark is-inactive" aria-disabled="true" title="Coming soon">
+                    <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></span>
+                    <span>Live Demo</span><span class="soon-tag">soon</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a class="button is-normal is-rounded is-dark is-inactive" aria-disabled="true" title="Coming soon">
+                    <span class="icon"><svg width="16" height="16" viewBox="0 0 496 512" aria-hidden="true"><path fill="currentColor" d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"/></svg></span>
+                    <span>CVIT Website</span><span class="soon-tag">soon</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== TEASER ===== -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column uniform-content-width">
+            <figure class="figure-card">
+              <img src="static/images/teaser.png" alt="SignPlug at a glance: the input sentence 'He will come home' is converted to the glosses HE, HOME, COME, whose stored keyposes are retrieved from the gloss keypose dictionary and played on a real-time, CPU-only SMPL-X avatar.">
+              <figcaption>An input sentence is turned into ISL glosses, each gloss's corrected keyposes are retrieved from the dictionary, and a CPU-only SMPL-X avatar signs the sentence in real time.</figcaption>
+            </figure>
+            <div class="teaser-grid">
+              <figure class="figure-card">
+                <img src="static/images/avatar_demo.gif" alt="The SignPlug avatar signing the ISL sentence 'He wants to eat now'.">
+                <figcaption>"He wants to eat now," synthesized end to end.</figcaption>
+              </figure>
+              <figure class="figure-card">
+                <img src="static/images/website_demo.png" alt="The SignPlug widget embedded in a web page, signing 'He wants to go to the office'.">
+                <figcaption>The SignPlug widget embedded in a web page.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== ABSTRACT ===== -->
+    <section class="section hero">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                We present <strong>SignPlug</strong>, a lightweight, real-time framework for synthesizing continuous
+                Indian Sign Language (ISL) avatar motion from input sentences directly on the web. The system is
+                designed to bridge the communication gap for Deaf and hard-of-hearing users. Digital accessibility
+                research has grown substantially, yet native browser support for sign language rendering remains
+                largely absent. Existing signing avatar pipelines are either motion capture systems too costly to
+                scale, GPU-hungry neural motion generators, or notation-driven systems such as HamNoSys and SiGML that
+                demand substantial linguistic expertise and yield mechanical, unnatural movement. None of these
+                reconstruct motion directly from real signers at dictionary scale.
+              </p>
+              <p>
+                We address this gap by reconstructing SMPL-X keyposes directly from monocular ISLRTC ISL dictionary
+                videos and refining them with a purpose-built sparse correction annotation tool, <em>Gizmo</em>. This
+                yields the <strong>Widget Dictionary</strong>, a reusable gloss pose dictionary with corrected body,
+                hand, and finger articulation. At inference time, glosses predicted from an input
+                sentence are retrieved from this dictionary, retargeted onto a canonical SMPL-X avatar, and composed via
+                spherical linear interpolation (SLERP), avoiding both frame-by-frame animation and GPU-based motion
+                generation entirely. SignPlug therefore enables low-latency, browser-deployable ISL sentence synthesis
+                grounded in captured human motion rather than symbolic notation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== DEMO VIDEO ===== -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column uniform-content-width">
+            <h2 class="title is-3">Videos</h2>
+
+            <div class="video-block">
+              <h3 class="title is-5">Widget Dictionary</h3>
+              <p class="content has-text-justified">
+                How the Widget Dictionary is built: monocular ISLRTC dictionary videos, automatic SMPL-X
+                estimation, sparse keypose selection, and manual correction of body, hand, and finger articulation.
+              </p>
+              <div class="publication-video">
+                <video controls muted loop playsinline preload="metadata" poster="static/images/dataset_construction.jpg">
+                  <source src="static/videos/dataset.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+
+            <div class="video-block">
+              <h3 class="title is-5">Website Demo</h3>
+              <p class="content has-text-justified">
+                SignPlug runs entirely in the browser, with no GPU and no server-side model: a user selects a
+                sentence, and the avatar animation is synthesized and played back with playback and scrubbing controls.
+              </p>
+              <div class="publication-video">
+                <video controls muted loop playsinline preload="metadata" poster="static/images/website_demo_thumb.jpg">
+                  <source src="static/videos/website_demo.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PIPELINE ===== -->
+    <section class="section hero">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column uniform-content-width">
+            <h2 class="title is-3">SignPlug Pipeline</h2>
+            <p class="content has-text-justified" style="margin-bottom: 1.5rem;">
+              <strong>Offline</strong>, each ISLRTC dictionary video is processed by SMPLer-X to recover an initial
+              SMPL-X motion sequence, a sparse set of linguistically salient keyposes is selected, finger and wrist
+              errors in these keyposes are corrected by hand, and the result is stored as a reusable dictionary entry.
+              <strong>Online</strong>, an input sentence is converted to an ISL gloss sequence with an LLM, the
+              corrected keyposes for each gloss are retrieved, retargeted onto a single canonical SMPL-X avatar, and
+              joined with per-bone SLERP transitions for real-time playback.
+            </p>
+            <figure class="figure-card">
+              <img src="static/images/pipeline_offline.jpg" alt="Offline stage: ISL dictionary video, SMPL-X pose detection, sparse keyframe selection, manual pose correction, corrected gloss pose dictionary.">
+              <figcaption>(a) Offline dictionary construction, done once per gloss.</figcaption>
+            </figure>
+            <figure class="figure-card">
+              <img src="static/images/pipeline_online.png" alt="Online stage: sentence, gloss sequence, dictionary lookup, pose transfer onto the canonical SMPL-X avatar, interpolation between keyframes, animation.">
+              <figcaption>(b) Online sentence synthesis, performed for every sentence in the browser.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== WIDGET DICTIONARY ===== -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column uniform-content-width">
+            <h2 class="title is-3">Widget Dictionary</h2>
+            <p class="content has-text-justified">
+              The Widget Dictionary is a 3D gloss pose dictionary for ISL built from real signers. Each isolated,
+              gloss-aligned sign is stored as manually verified SMPL-X keyposes with corrected body, hand, and finger
+              articulation, retargeted onto a canonical avatar so that signs are independent of the original signer.
+              New glosses can be added at a one-time, linear cost per sign, making the dictionary scalable to the full
+              ISLRTC vocabulary.
+            </p>
+            <div class="stat-grid">
+              <div class="stat-tile"><span class="stat-value">Sparse</span><span class="stat-label">manually corrected SMPL-X keyposes</span></div>
+              <div class="stat-tile"><span class="stat-value">Canonical</span><span class="stat-label">signer-independent avatar</span></div>
+              <div class="stat-tile"><span class="stat-value">25 FPS</span><span class="stat-label">native playback rate</span></div>
+              <div class="stat-tile"><span class="stat-value">Body + Hands</span><span class="stat-label">SMPL-X articulation</span></div>
+            </div>
+            <figure class="figure-card">
+              <img src="static/images/dataset_construction.jpg" alt="Dataset construction: monocular ISL dictionary videos, automatic SMPL-X estimation, sparse human correction, reusable gloss pose dictionary.">
+              <figcaption>From monocular dictionary videos to a reusable 3D gloss pose dictionary.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== GIZMO CORRECTION ===== -->
+    <section class="section hero">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column uniform-content-width">
+            <h2 class="title is-3">Sparse Pose Correction with Gizmo</h2>
+            <p class="content has-text-justified" style="margin-bottom: 1.5rem;">
+              Monocular SMPL-X estimates often get finger curl and wrist orientation wrong, and in sign language such
+              errors change the meaning of a sign. Gizmo shows the reference video next to the reconstructed avatar.
+              The annotator selects a bone, adjusts its rotation about each local axis, and propagates corrected finger
+              poses to other frames, so only a few keyposes per gloss need to be fixed.
+            </p>
+            <figure class="figure-card">
+              <img src="static/images/correction_example.png" alt="Correction of the gloss 'office': reference video, automatic SMPL-X pose with a finger curl error, and the corrected pose.">
+              <figcaption>Gloss "office": (a) reference video, (b) automatic SMPL-X pose with a finger curl error, (c) corrected pose.</figcaption>
+            </figure>
+            <figure class="figure-card">
+              <img src="static/images/gizmo_tool.png" alt="The Gizmo annotation interface, with the reference sign video, the SMPL-X pose viewer, bone selection, per-axis rotation controls, camera presets and frame saving.">
+              <figcaption>The Gizmo annotation interface.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== RESULTS ===== -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column uniform-content-width">
+            <h2 class="title is-3 has-text-centered">Results</h2>
+
+            <!-- User study -->
+            <h4 class="table-section-title">Study with Deaf ISL Signers</h4>
+            <p class="table-caption">11 Deaf and hard-of-hearing ISL signers watched 34 avatar sentences.</p>
+            <div class="stat-grid">
+              <div class="stat-tile"><span class="stat-value">88.8%</span><span class="stat-label">sentences identified exactly (332/374, four-option task)</span></div>
+              <div class="stat-tile"><span class="stat-value">2.67 / 5</span><span class="stat-label">understandability</span></div>
+              <div class="stat-tile"><span class="stat-value">2.61 / 5</span><span class="stat-label">hand shape</span></div>
+              <div class="stat-tile"><span class="stat-value">3.0 / 5</span><span class="stat-label">web demo usability</span></div>
+            </div>
+            <div class="content has-text-justified">
+              <p>
+                Participants also rated naturalness (2.48) and body posture (2.50). They stressed the importance of
+                facial expressions and noted that some signs change form in context (e.g., GO in "he is going home"),
+                which motivates our future work on context-dependent sign forms and non-manual markers.
+              </p>
+            </div>
+
+            <!-- Gloss retrieval -->
+            <h4 class="table-section-title" style="margin-top: 2.5rem;">Does Manual Correction Help?</h4>
+            <p class="table-caption">Each avatar gloss video is embedded with Uni-Sign and ranked against all real signer
+              videos by cosine similarity. A retrieval is correct at Top-k if the real video of the same gloss is among
+              the k highest-ranked.</p>
+            <div class="table-container">
+              <table class="table is-bordered is-striped is-hoverable is-fullwidth results-table">
+                <thead>
+                  <tr><th>Avatar videos</th><th>Top-1 (%)</th><th>Top-3 (%)</th><th>Top-5 (%)</th><th>Top-10 (%)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td class="text-left">Raw SMPL-X (no correction)</td><td>10.17</td><td>20.17</td><td>27.33</td><td>38.00</td></tr>
+                  <tr class="best-result"><td class="text-left">Pose corrected (Gizmo)</td><td>35.17</td><td>53.50</td><td>62.00</td><td>72.00</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Runtime -->
+            <h4 class="table-section-title" style="margin-top: 2.5rem;">Real-Time Synthesis in the Browser</h4>
+            <p class="table-caption">One-time preparation latency before playback and steady-state frame rate, over 10
+              runs per sentence length (cold start excluded).</p>
+            <div class="table-container">
+              <table class="table is-bordered is-striped is-hoverable is-fullwidth results-table">
+                <thead>
+                  <tr><th>Sentence length</th><th>Latency (s)</th><th>FPS</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td class="text-left">2 glosses</td><td>0.129</td><td>25.02</td></tr>
+                  <tr><td class="text-left">5 glosses</td><td>0.296</td><td>25.00</td></tr>
+                  <tr><td class="text-left">10 glosses</td><td>0.542</td><td>25.00</td></tr>
+                  <tr><td class="text-left">20 glosses</td><td>1.419</td><td>25.00</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="figure-card" style="margin-top: 2rem;">
+              <img src="static/images/smooth_transition.jpg" alt="Right wrist rotation across the OFFICE to GO gloss boundary, showing smooth curves through the SLERP transition span.">
+              <figcaption>Right-wrist rotation across the OFFICE→GO boundary: SLERP transitions keep motion smooth between glosses.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== CONCLUSION ===== -->
+    <section class="section hero">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3 has-text-centered">Conclusion</h2>
+            <div class="content has-text-justified">
+              <p>
+                SignPlug shows that sentence-level ISL avatar animation can run on consumer hardware, entirely client
+                side, without runtime neural inference, and plays back at the native 25 FPS of the source recordings.
+                The current system covers manual articulators (body pose and handshape). Non-manual markers such as
+                facial expressions, and context-dependent sign forms, are the next steps. We hope this pipeline helps
+                the community build more expressive and widely deployable tools for ISL accessibility on the web.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== CITATION =====
+         Hidden until the official BibTeX is available (proceedings / de-anonymized OpenReview record).
+         To restore: uncomment this section and paste the official entry into <code id="bibtex-code">.
+    <section class="section hero is-light" id="BibTeX">
+      <div class="container is-max-desktop">
+        <div class="bibtex-header">
+          <h2 class="title is-3" style="margin-bottom: 0 !important;">Citation</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()"><span class="copy-text">Copy</span></button>
+        </div>
+        <pre><code id="bibtex-code">PASTE OFFICIAL BIBTEX HERE</code></pre>
+      </div>
+    </section>
+    -->
+
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content has-text-centered">
+              <p>
+                This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>, which was adopted from the <a href="https://nerfies.github.io/" target="_blank" rel="noopener">Nerfies</a> project page.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</body>
+</html>

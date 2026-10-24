@@ -1,0 +1,224 @@
+/* ===== SignPlug Project Page Custom Styles (on top of index.css) ===== */
+
+.uniform-content-width {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Inactive links: shown, but not clickable until the resource is released */
+.button.is-inactive {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.button .soon-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.affiliation-list sup,
+.publication-authors sup {
+  font-size: 0.7em;
+  margin-left: 1px;
+}
+
+.venue-tag {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--border-radius);
+  background: var(--background-accent);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* Figures */
+.figure-card {
+  margin: 0 0 1.5rem;
+}
+
+.figure-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  background: #fff;
+}
+
+.figure-card figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Teaser: avatar animation next to the website widget screenshot */
+.teaser-grid {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.teaser-grid img {
+  background: #020617;
+}
+
+/* Video placeholder until the demo video is added */
+.video-placeholder {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border-radius: var(--border-radius-lg);
+  background: var(--text-primary);
+  color: #cbd5e1;
+  box-shadow: var(--shadow-lg);
+  font-weight: 600;
+}
+
+.video-placeholder svg {
+  width: 56px;
+  height: 56px;
+  opacity: 0.8;
+}
+
+/* Key numbers */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.stat-tile {
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.1rem 0.75rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-tile .stat-value {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.stat-tile .stat-label {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Results tables */
+.table-section-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid var(--primary-color);
+}
+
+.table-caption {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.results-table {
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-md);
+}
+
+.results-table thead {
+  background: var(--text-primary);
+}
+
+.results-table thead th {
+  color: #fff !important;
+  font-weight: 600;
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+.results-table tbody td {
+  text-align: center !important;
+  vertical-align: middle;
+}
+
+.results-table tbody td.text-left {
+  text-align: left !important;
+}
+
+.results-table .best-result td {
+  background: #ecfdf5;
+  font-weight: 700;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.section.hero {
+  padding: 3rem 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .teaser-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section.hero {
+    padding: 2rem 1rem;
+  }
+
+  .results-table {
+    font-size: 0.85rem;
+  }
+}
+
+/* Videos section: one block per video (heading, caption, 16:9 player) */
+.video-block + .video-block {
+  margin-top: 2.5rem;
+}
+
+.video-block .title.is-5 {
+  margin-bottom: 0.6rem;
+}
+
+.video-block .content {
+  margin-bottom: 1.2rem;
+}
+
+.publication-video video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius-lg);
+  background: #000;
+  object-fit: contain;
+}
