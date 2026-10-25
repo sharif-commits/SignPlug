@@ -57,24 +57,6 @@
     .bar a:hover { text-decoration: underline; }
     iframe { flex: 1; width: 100%; min-height: 0; border: 0; display: block; }
 
-    .chat {
-      flex: 1; overflow-y: auto; padding: 28px 22px 40px;
-      display: flex; flex-direction: column; align-items: center; gap: 18px;
-    }
-    .chat p { max-width: 760px; margin: 0; line-height: 1.6; text-align: center; color: var(--text); }
-    .chat .note { color: var(--muted); font-size: 0.88rem; }
-    .open-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--primary); color: #fff; text-decoration: none; font-weight: 700;
-      border-radius: 12px; padding: 12px 22px;
-    }
-    .open-btn:hover { background: #1d4ed8; }
-    .shot { display: block; max-width: 1100px; width: 100%; }
-    .shot img {
-      width: 100%; display: block; border-radius: 14px; border: 1px solid var(--line);
-      box-shadow: 0 10px 25px -8px rgb(0 0 0 / 0.18);
-    }
-
     @media (max-width: 640px) {
       header { padding: 10px 14px; }
       [role="tablist"] { margin-left: 0; width: 100%; }
@@ -100,25 +82,15 @@
         <span>The SignPlug widget embedded in a web page: select a sentence on the page and the avatar signs it.</span>
         <a href="https://sharif-commits.github.io/SignPlug-code/" target="_blank" rel="noopener">Open in a new tab &#8599;</a>
       </div>
-      <iframe src="https://sharif-commits.github.io/SignPlug-code/" title="SignPlug web-plugin demo" loading="lazy" allow="fullscreen"></iframe>
+      <iframe data-src="https://sharif-commits.github.io/SignPlug-code/" title="SignPlug web-plugin demo" allow="fullscreen"></iframe>
     </section>
 
     <section role="tabpanel" id="panel-sign-chat" aria-labelledby="tab-sign-chat" hidden>
-      <div class="chat">
-        <p>
-          Type any English sentence, or pick one of 100 example sentences: it is translated into ISL glosses,
-          their keyposes are retrieved from the Widget Dictionary and interpolated live, and the avatar signs it
-          while the gloss being signed is highlighted. Words without a sign are fingerspelled.
-        </p>
-        <a class="open-btn" href="http://10.1.72.56:8080/" target="_blank" rel="noopener">Open ISL Sign Chat &#8599;</a>
-        <p class="note">
-          The ISL Sign Chat runs on a server inside the IIIT Hyderabad network, so it opens in its own tab and is
-          reachable only from that network.
-        </p>
-        <a class="shot" href="http://10.1.72.56:8080/" target="_blank" rel="noopener">
-          <img src="static/images/live_synthesis_demo.jpg" alt="ISL Sign Chat: a sentence library and text box on the left, and the avatar signing 'Please help me' on the right, with the current gloss HELP shown below it.">
-        </a>
+      <div class="bar">
+        <span>Pick one of 100 English sentences: the avatar signs its ISL glosses, highlighting the gloss being signed. Words without a sign are fingerspelled.</span>
+        <a href="chat/" target="_blank" rel="noopener">Open in a new tab &#8599;</a>
       </div>
+      <iframe data-src="chat/" title="ISL Sign Chat" allow="fullscreen"></iframe>
     </section>
   </main>
 
@@ -130,7 +102,11 @@
         const on = t === tab;
         t.setAttribute('aria-selected', String(on));
         t.tabIndex = on ? 0 : -1;
-        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        panel.hidden = !on;
+        // Each demo loads its avatar only when its tab is first opened.
+        const frame = panel.querySelector('iframe[data-src]');
+        if (on && frame && !frame.src) frame.src = frame.dataset.src;
       });
       if (focus) tab.focus();
       history.replaceState(null, '', '#' + tab.dataset.key);
@@ -144,8 +120,7 @@
       });
     });
 
-    const start = tabs.find(t => '#' + t.dataset.key === location.hash);
-    if (start) select(start, false);
+    select(tabs.find(t => '#' + t.dataset.key === location.hash) || tabs[0], false);
   </script>
 </body>
 </html>
