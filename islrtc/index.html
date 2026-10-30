@@ -1611,13 +1611,7 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
             }
         }
 
-        // Hide YouTube's own (auto-generated) captions: the corrected captions are shown below the video.
-        function hideYouTubeCaptions() {
-            try { player.unloadModule('captions'); player.unloadModule('cc'); } catch (e) { }
-        }
-
         function onStateChange(e) {
-            if (e.data === YT.PlayerState.PLAYING) hideYouTubeCaptions();
             if (heldForSign) return;                     // paused by us, not by the viewer
             if (e.data === YT.PlayerState.PAUSED && window.signplugStopPlayback) window.signplugStopPlayback();
             if (e.data === YT.PlayerState.PLAYING && signing && window.signplugStartPlayback) window.signplugStartPlayback();
@@ -1628,9 +1622,9 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
             player = new YT.Player('isl-video-player', {
                 videoId: VIDEO_ID,
                 playerVars: { start: Math.floor(info.start), end: Math.ceil(info.end), rel: 0, playsinline: 1,
-                              cc_load_policy: 0, iv_load_policy: 3, modestbranding: 1,
+                              cc_load_policy: 1, cc_lang_pref: 'en', iv_load_policy: 3, modestbranding: 1,
                               autoplay: new URLSearchParams(location.search).has('autoplay') ? 1 : 0 },
-                events: { onStateChange: onStateChange, onApiChange: hideYouTubeCaptions }
+                events: { onStateChange: onStateChange }
             });
             setInterval(tick, 100);
         };
