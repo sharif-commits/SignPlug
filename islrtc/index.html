@@ -134,6 +134,18 @@ var S3WaaSAccessibilityParams = {"blogInfoName":"Indian Sign Language Research a
         ul.isl-examples li { break-inside: avoid; margin: 0 0 6px; }
         @media (max-width: 600px) { ul.isl-examples { columns: 1; } }
 
+        /* Captioned video signed in ISL */
+        .isl-video { margin: 22px 0 18px; }
+        .isl-video h3 { margin: 0 0 4px; }
+        .isl-video-frame { position: relative; width: 100%; max-width: 720px; aspect-ratio: 16 / 9; background: #000; }
+        .isl-video-frame > div, .isl-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .isl-video-caption { max-width: 720px; min-height: 3.2em; margin-top: 8px; padding: 8px 12px;
+            background: #0f172a; color: #f8fafc; border-radius: 6px; font-size: 16px; line-height: 1.45; }
+        .isl-video-caption .sentence-unit { text-decoration-color: rgba(103, 232, 249, 0.6); }
+        .isl-video-caption .gloss { display: block; margin-top: 3px; color: #67e8f9; font: 600 12px/1.4 Arial, sans-serif; letter-spacing: 0.04em; }
+        .isl-video-controls { margin-top: 6px; color: #475569; font-size: 14px; }
+        .isl-video-controls .status { margin-left: 10px; color: #0e7490; font-weight: 600; }
+
         /* Research demo notice */
         #signplug-demo-notice {
             background: #fff7e6; color: #5c3d00; border-bottom: 1px solid #f0c36d;
@@ -752,6 +764,16 @@ var S3WaaSAccessibilityParams = {"blogInfoName":"Indian Sign Language Research a
 		<div class="wpb_wrapper">
 			<p>Indian Sign Language (ISL) is a visual manual language used by the Deaf community in India. It serves as a primary means of communication for millions of Deaf individuals, as well as for teachers, parents, siblings, and interpreters. ISL plays a vital role in providing accessibility and promoting inclusivity for the Deaf population in various aspects of life, including education, employment, and social interactions. Its distinct grammar and vocabulary make it a rich and expressive language, facilitating meaningful communication within the Deaf community and with hearing individuals who learn ISL.</p>
 <p>Description of Basic Indian Sign Language (ISL) course in self learning mode. The Online Basic Indian Sign Language (ISL) course in self-learning mode aims to develop learners’ fundamental communication skills in ISL, fostering an understanding of its importance in the Deaf community. This course is designed to create interest, sensitivity, and curiosity towards ISL, with specific objectives including:</p>
+<section class="isl-video" aria-label="Captioned video signed in ISL">
+    <h3>Video: captions signed in ISL</h3>
+    <p class="isl-hint">A captioned public-service video from Delhi Airport. Play it and the avatar signs each caption as it appears.</p>
+    <div class="isl-video-frame"><div id="isl-video-player"></div></div>
+    <div class="isl-video-caption" id="isl-video-caption" aria-live="polite">Press play on the video.</div>
+    <div class="isl-video-controls">
+        <label><input type="checkbox" id="isl-video-wait" checked> Pause the video until the avatar finishes signing</label>
+        <span class="status" id="isl-video-status"></span>
+    </div>
+</section>
 <p class="isl-hint">Example sentences from each module are listed below. Select any sentence to see it signed by the 3D avatar.</p>
 <ol>
 <li><strong>Most commonly used sentences in ISL</strong>
@@ -1352,6 +1374,8 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
 
         function startPlayback() { if (animationFrames.length) isPlaying = true; uiRefs.playBtn.textContent = '⏸'; }
         function stopPlayback() { isPlaying = false; if (uiRefs && uiRefs.playBtn) uiRefs.playBtn.textContent = '▶'; }
+        window.signplugStartPlayback = startPlayback;      // used by the captioned video below
+        window.signplugStopPlayback = stopPlayback;
 
         uiRefs.playBtn.addEventListener('click', () => { isPlaying ? stopPlayback() : startPlayback(); });
 
@@ -1381,6 +1405,7 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
                         uiRefs.counter.textContent = `${currentFrame + 1} / ${animationFrames.length}`;
                     } else {
                         stopPlayback();
+                        window.dispatchEvent(new Event('signplug:ended'));   // the captioned video waits for this
                     }
                 }
             }
@@ -1531,4 +1556,91 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
             }
         });
     </script>
-<div id="menu-status" role="status" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div><div id="menu-hint-global" aria-live="polite" role="status" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;"></div></body></html>
+<div id="menu-status" role="status" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div><div id="menu-hint-global" aria-live="polite" role="status" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;"></div>
+<script>
+    // Captioned video: the avatar signs each caption cue (pre-rendered, glosses checked by hand) as the video
+    // reaches it. If signing takes longer than the cue, the video waits for the avatar (checkbox).
+    (function () {
+        const VIDEO_ID = 'K-irgyUFdOE';
+        const captionEl = document.getElementById('isl-video-caption');
+        const statusEl = document.getElementById('isl-video-status');
+        const waitBox = document.getElementById('isl-video-wait');
+        let player, info, cues = [], active = null, signing = false, heldForSign = false, lastT = 0;
+
+        function esc(s) { return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+        function showCue(cue) {
+            if (!cue) { captionEl.textContent = ''; return; }
+            const gloss = cue.glosses.map(g => g[0]).join(' ');
+            captionEl.innerHTML = `<span class="sentence-unit playing" data-id="${cue.id}">${esc(cue.english)}</span>` +
+                `<span class="gloss">ISL: ${esc(gloss)}</span>`;
+        }
+
+        function release() {
+            heldForSign = false;
+            statusEl.textContent = '';
+            if (player.getPlayerState() !== YT.PlayerState.PLAYING) player.playVideo();
+        }
+
+        window.addEventListener('signplug:ended', () => {
+            signing = false;
+            if (heldForSign) release();
+        });
+        waitBox.addEventListener('change', () => { if (!waitBox.checked && heldForSign) release(); });
+
+        function tick() {
+            if (!player || !player.getCurrentTime || !cues.length) return;
+            const t = player.getCurrentTime();
+            const state = player.getPlayerState();
+            if (Math.abs(t - lastT) > 1.5) {            // seek: start over from the cue under the playhead
+                active = null; signing = false;
+                if (heldForSign) { heldForSign = false; statusEl.textContent = ''; }
+            }
+            lastT = t;
+            if (state !== YT.PlayerState.PLAYING) return;
+            const cue = cues.find(c => t >= c.start && t < c.end);
+            if (cue && cue !== active) {
+                active = cue;
+                signing = true;
+                showCue(cue);
+                window.triggerSentenceAnimation(cue.id);
+            } else if (active && signing && waitBox.checked && t >= active.end - 0.1) {
+                heldForSign = true;
+                statusEl.textContent = 'Waiting for the avatar to finish signing…';
+                player.pauseVideo();
+            }
+        }
+
+        // Hide YouTube's own (auto-generated) captions: the corrected captions are shown below the video.
+        function hideYouTubeCaptions() {
+            try { player.unloadModule('captions'); player.unloadModule('cc'); } catch (e) { }
+        }
+
+        function onStateChange(e) {
+            if (e.data === YT.PlayerState.PLAYING) hideYouTubeCaptions();
+            if (heldForSign) return;                     // paused by us, not by the viewer
+            if (e.data === YT.PlayerState.PAUSED && window.signplugStopPlayback) window.signplugStopPlayback();
+            if (e.data === YT.PlayerState.PLAYING && signing && window.signplugStartPlayback) window.signplugStartPlayback();
+            if (e.data === YT.PlayerState.ENDED) { active = null; signing = false; }
+        }
+
+        window.onYouTubeIframeAPIReady = function () {
+            player = new YT.Player('isl-video-player', {
+                videoId: VIDEO_ID,
+                playerVars: { start: Math.floor(info.start), end: Math.ceil(info.end), rel: 0, playsinline: 1,
+                              cc_load_policy: 0, iv_load_policy: 3, modestbranding: 1,
+                              autoplay: new URLSearchParams(location.search).has('autoplay') ? 1 : 0 },
+                events: { onStateChange: onStateChange, onApiChange: hideYouTubeCaptions }
+            });
+            setInterval(tick, 100);
+        };
+
+        fetch(`./api/video/${VIDEO_ID}.json`).then(r => r.json()).then(data => {
+            info = data; cues = data.cues;
+            const s = document.createElement('script');
+            s.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(s);
+        }).catch(err => { captionEl.textContent = 'Could not load the captions.'; console.error(err); });
+    })();
+</script>
+</body></html>
