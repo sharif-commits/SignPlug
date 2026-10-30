@@ -139,10 +139,18 @@ var S3WaaSAccessibilityParams = {"blogInfoName":"Indian Sign Language Research a
         .isl-video h3 { margin: 0 0 4px; }
         .isl-video-frame { position: relative; width: 100%; max-width: 720px; aspect-ratio: 16 / 9; background: #000; }
         .isl-video-frame > div, .isl-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
-        .isl-video-caption { max-width: 720px; min-height: 3.2em; margin-top: 8px; padding: 8px 12px;
-            background: #0f172a; color: #f8fafc; border-radius: 6px; font-size: 16px; line-height: 1.45; }
-        .isl-video-caption .sentence-unit { text-decoration-color: rgba(103, 232, 249, 0.6); }
-        .isl-video-caption .gloss { display: block; margin-top: 3px; color: #67e8f9; font: 600 12px/1.4 Arial, sans-serif; letter-spacing: 0.04em; }
+        .isl-video-caption { position: relative; max-width: 720px; min-height: 4.6em; margin-top: 10px; padding: 12px 16px 12px 20px;
+            background: #fff; color: #0f172a; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08); font-size: 17px; line-height: 1.45; }
+        .isl-video-caption::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+            background: linear-gradient(180deg, #06b6d4, #3b82f6); }
+        .isl-video-caption .sentence-unit { font-weight: 600; text-decoration: none; }
+        .isl-video-caption .gloss { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+        .isl-video-caption .gloss span { padding: 1px 10px; border-radius: 999px; font: 700 12px/1.7 Arial, sans-serif; letter-spacing: 0.04em;
+            background: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc; }
+        .isl-video-caption .gloss .tag { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; border-color: transparent; }
+        .isl-video-caption .gloss .fs { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+        .isl-video-caption .hint { color: #64748b; font-size: 15px; }
         .isl-video-controls { margin-top: 6px; color: #475569; font-size: 14px; }
         .isl-video-controls .status { margin-left: 10px; color: #0e7490; font-weight: 600; }
 
@@ -768,7 +776,7 @@ var S3WaaSAccessibilityParams = {"blogInfoName":"Indian Sign Language Research a
     <h3>Video: captions signed in ISL</h3>
     <p class="isl-hint">A captioned public-service video from Delhi Airport. Play it and the avatar signs each caption as it appears.</p>
     <div class="isl-video-frame"><div id="isl-video-player"></div></div>
-    <div class="isl-video-caption" id="isl-video-caption" aria-live="polite">Press play on the video.</div>
+    <div class="isl-video-caption" id="isl-video-caption" aria-live="polite"><span class="hint">Press play on the video.</span></div>
     <div class="isl-video-controls">
         <label><input type="checkbox" id="isl-video-wait" checked> Pause the video until the avatar finishes signing</label>
         <span class="status" id="isl-video-status"></span>
@@ -1570,10 +1578,22 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
         function esc(s) { return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
         function showCue(cue) {
-            if (!cue) { captionEl.textContent = ''; return; }
-            const gloss = cue.glosses.map(g => g[0]).join(' ');
+            captionEl.dataset.cue = cue ? cue.id : '';
+            if (!cue) { captionEl.innerHTML = '<span class="hint">Press play on the video.</span>'; return; }
+            const pills = cue.glosses.map(([g, folder]) =>
+                `<span${folder ? '' : ' class="fs" title="fingerspelled"'}>${esc(g)}</span>`).join('');
             captionEl.innerHTML = `<span class="sentence-unit playing" data-id="${cue.id}">${esc(cue.english)}</span>` +
-                `<span class="gloss">ISL: ${esc(gloss)}</span>`;
+                `<div class="gloss"><span class="tag">ISL</span>${pills}</div>`;
+        }
+
+        // Forget the cue being signed (after a seek or a restart) and stop the avatar.
+        function resetSigning() {
+            active = null; signing = false;
+            if (window.signplugStopPlayback) window.signplugStopPlayback();
+            if (heldForSign) {                           // the video was paused by us, not the viewer: carry on
+                heldForSign = false; statusEl.textContent = '';
+                player.playVideo();
+            }
         }
 
         function release() {
@@ -1590,15 +1610,20 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
 
         function tick() {
             if (!player || !player.getCurrentTime || !cues.length) return;
-            const t = player.getCurrentTime();
+            let t = player.getCurrentTime();
             const state = player.getPlayerState();
-            if (Math.abs(t - lastT) > 1.5) {            // seek: start over from the cue under the playhead
-                active = null; signing = false;
-                if (heldForSign) { heldForSign = false; statusEl.textContent = ''; }
+            if (state === YT.PlayerState.UNSTARTED || state === YT.PlayerState.CUED || state === YT.PlayerState.ENDED) {
+                lastT = t; return;
             }
+            // Only info.start..info.end is signed: a restart or a seek outside it goes back to its start.
+            if (t < info.start - 0.5 || t > info.end + 0.5) { player.seekTo(info.start, true); t = info.start; }
+            if (Math.abs(t - lastT) > 1.5) resetSigning();   // seek: start over from the cue under the playhead
             lastT = t;
-            if (state !== YT.PlayerState.PLAYING) return;
             const cue = cues.find(c => t >= c.start && t < c.end);
+            if (state !== YT.PlayerState.PLAYING) {           // paused or buffering: show the caption under the playhead
+                if (!active && cue && captionEl.dataset.cue !== String(cue.id)) showCue(cue);
+                return;
+            }
             if (cue && cue !== active) {
                 active = cue;
                 signing = true;
@@ -1615,7 +1640,11 @@ jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","curr
             if (heldForSign) return;                     // paused by us, not by the viewer
             if (e.data === YT.PlayerState.PAUSED && window.signplugStopPlayback) window.signplugStopPlayback();
             if (e.data === YT.PlayerState.PLAYING && signing && window.signplugStartPlayback) window.signplugStartPlayback();
-            if (e.data === YT.PlayerState.ENDED) { active = null; signing = false; }
+            if (e.data === YT.PlayerState.ENDED) {
+                active = null; signing = false;
+                captionEl.dataset.cue = '';
+                captionEl.innerHTML = '<span class="hint">End of the signed part. Press play to watch it again.</span>';
+            }
         }
 
         window.onYouTubeIframeAPIReady = function () {
